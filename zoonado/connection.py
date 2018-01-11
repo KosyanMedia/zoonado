@@ -11,7 +11,7 @@ from tornado import ioloop, iostream, gen, concurrent, tcpclient
 from zoonado import protocol, iterables, exc
 
 
-version_regex = re.compile(r'Zookeeper version: (\d)\.(\d)\.(\d)-.*')
+version_regex = re.compile(r'Zookeeper version: (\d+)\.(\d+)\.(\d+)-.*')
 
 # all requests and responses are prefixed with a 32-bit int denoting size
 size_struct = struct.Struct("!i")
