@@ -40,6 +40,7 @@ class Zoonado(object):
             default_acl=None,
             retry_policy=None,
             allow_read_only=False,
+            connect_try_limit=None,
     ):
         self.chroot = None
         if chroot:
@@ -50,7 +51,7 @@ class Zoonado(object):
         self.data_decoder = data_decoder or default_decoder
 
         self.session = Session(
-            servers, session_timeout, retry_policy, allow_read_only
+            servers, session_timeout, retry_policy, allow_read_only, connect_try_limit
         )
 
         self.default_acl = default_acl or [protocol.UNRESTRICTED_ACCESS]

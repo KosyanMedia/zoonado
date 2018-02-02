@@ -64,7 +64,7 @@ class RetryPolicy(object):
         return cls(try_limit=None, sleep_func=never_wait)
 
     @classmethod
-    def exponential_backoff(cls, base=2, maximum=None):
+    def exponential_backoff(cls, base=2, maximum=None, try_limit=None):
 
         def exponential(timings):
             wait_time = base ** len(timings)
@@ -73,7 +73,7 @@ class RetryPolicy(object):
 
             return wait_time
 
-        return cls(try_limit=None, sleep_func=exponential)
+        return cls(try_limit=try_limit, sleep_func=exponential)
 
     @classmethod
     def until_elapsed(cls, timeout):

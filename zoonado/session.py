@@ -24,7 +24,7 @@ log = logging.getLogger(__name__)
 
 class Session(object):
 
-    def __init__(self, servers, timeout, retry_policy, allow_read_only):
+    def __init__(self, servers, timeout, retry_policy, allow_read_only, connect_try_limit):
         self.hosts = []
         for server in servers.split(","):
             if ":" in server:
@@ -40,6 +40,7 @@ class Session(object):
 
         self.retry_policy = retry_policy or RetryPolicy.forever()
         self.allow_read_only = allow_read_only
+        self.connect_try_limit = connect_try_limit
 
         self.xid = 0
         self.last_zxid = None
@@ -77,7 +78,7 @@ class Session(object):
     def find_server(self, allow_read_only):
         conn = None
 
-        retry_policy = RetryPolicy.exponential_backoff(maximum=MAX_FIND_WAIT)
+        retry_policy = RetryPolicy.exponential_backoff(maximum=MAX_FIND_WAIT, try_limit=self.connect_try_limit)
 
         while not conn:
             yield retry_policy.enforce()
