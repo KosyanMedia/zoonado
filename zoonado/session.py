@@ -55,6 +55,9 @@ class Session(object):
 
         self.closing = False
 
+    def was_lost(self):
+        return self.state == States.LOST
+
     @gen.coroutine
     def ensure_safe_state(self, writing=False):
         safe_states = [States.CONNECTED]

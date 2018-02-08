@@ -60,6 +60,9 @@ class Zoonado(object):
 
         self.recipes = RecipeProxy(self)
 
+    def session_lost(self):
+        return self.session.was_lost()
+
     def normalize_path(self, path):
         if self.chroot:
             path = "/".join([self.chroot, path])
