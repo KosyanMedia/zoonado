@@ -63,6 +63,9 @@ class Zoonado(object):
     def session_lost(self):
         return self.session.was_lost()
 
+    def session_suspended(self):
+        return self.session.was_suspended()
+
     def normalize_path(self, path):
         if self.chroot:
             path = "/".join([self.chroot, path])
